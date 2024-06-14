@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Class Quiz</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+        }
+
+        h1 {
+            color: #333;
+            text-decoration: underline;
+        }
+
+        #quiz {
+            max-width: 600px;
+            margin: 0 auto;
+            /* background: #b8b0b0; */
+
+        }
+
+        .question {
+            margin: 10px auto;
+            /* background: red; */
+        }
+
+        .nameContiner {
+            margin: 5px auto;
+            font-size: 20px;
+            color: rgb(62, 62, 249);
+        }
+
+        .buttonContiner {
+            background-color: rgb(184, 172, 172);
+        }
+
+        .buttonContiner button {
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-size: 14px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Class Quiz</h1>
+    <div id="quiz">
+
+    </div>
+
+    <script>
+
+
+        function selectAndShuffle(numbers, excludedNumber) {
+            // Filter out the excluded number
+            var filteredNumbers = numbers.filter(num => num !== excludedNumber);
+
+            // Generate three random indices
+            var indices = [];
+            while (indices.length < 3) {
+                var index = Math.floor(Math.random() * filteredNumbers.length);
+                if (!indices.includes(index)) {
+                    indices.push(index);
+                }
+            }
+
+            // Get the numbers corresponding to the generated indices
+            var selectedNumbers = indices.map(index => filteredNumbers[index]);
+
+            // Add the excluded number to the list
+            selectedNumbers.push(excludedNumber);
+
+            // Shuffle the selected numbers
+            for (var i = selectedNumbers.length - 1; i > 0; i--) {
+                var j = Math.floor(Math.random() * (i + 1));
+                [selectedNumbers[i], selectedNumbers[j]] = [selectedNumbers[j], selectedNumbers[i]];
+            }
+
+            return selectedNumbers;
+        }
+
+
+        // var Ans = [142, 143, 144, 145, 148, 150];
+        // var NameAns = {
+        //     "Mukesh Kumar Yadav": 142,
+        //     "Akshay Kumar Singh": 142,
+        //     "Suresh Col": 143,
+        //     "Jiut Kumar Yadav": 143,
+        //     "A Naveen": 144
+        // };
+
+        var Ans = [142, 143, 144, 145, 149];
+        var NameAns = {
+            "Mukesh Kumar Yadav": 142,
+            "Akshay Kumar Singh": 142,
+            "AK Sharma": 142,
+            "Suresh Col": 143,
+            "Jiut Kumar Yadav": 143,
+            "Pratap": 143,
+            "Durgesh Singh": 143,
+            "Ramswaroop": 143,
+            "Aman Chowhan": 143,
+            "A Naveen": 144,
+            "Saurabh": 144,
+            "Jaideep": 144,
+            "Govind Chowhan": 144,
+            "Pawan Kumar": 144,
+            "Shivam S Sharma": 145,
+            "Mohan Dagar": 145,
+            "Devender": 145,
+            "Sandeep": 145,
+            "RajKumar Singh": 149,
+            "Akash Kumawat": 149,
+            "Raushan Kumar": 149,
+            "Ankit Alhawat": 149,
+            "Dinesh": 149,
+        };
+
+        // full 
+        var Ans = [142, 143, 144, 145, 149];
+        var NameAns = {
+            "Mukesh Kumar Yadav": 142,
+            "Akshay Kumar Singh": 142,
+            "AK Sharma": 142,
+            "Suresh Col": 143,
+            "Jiut Kumar Yadav": 143,
+            "Pratap": 143,
+            "Durgesh Singh": 143,
+            "Ramswaroop": 143,
+            "Aman Chowhan": 143,
+            "A Naveen": 144,
+            "Saurabh": 144,
+            "Jaideep": 144,
+            "Govind Chowhan": 144,
+            "Pawan Kumar": 144,
+            "Shivam S Sharma": 145,
+            "Mohan Dagar": 145,
+            "Devender": 145,
+            "Sandeep": 145,
+            "RajKumar Singh": 149,
+            "Akash Kumawat": 149,
+            "Raushan Kumar": 149,
+            "Ankit Alhawat": 149,
+            "Dinesh": 149,
+        };
+
+
+
+        // main box 
+        var Quiz = document.getElementById('quiz');
+
+        // for (var name in NameAns) {
+        let Names = Object.keys(NameAns);
+
+        // Shuffle the Json OBJ
+        for (var i = Names.length - 1; i > 0; i--) {
+            var j = Math.floor(Math.random() * (i + 1));
+            [Names[i], Names[j]] = [Names[j], Names[i]];
+        }
+
+        // till here 
+
+        console.log(Names);
+
+        for (let i = 0; i < Names.length; i++) {
+            var name = Names[i];
+
+
+            // console.log(name);
+
+            if (NameAns.hasOwnProperty(name)) {
+                var value = NameAns[name];
+                console.log(value);
+
+                console.log(name + ': ' + value);
+                let op = selectAndShuffle(Ans, value);
+                console.log(op); // Output: Four shuffled numbers including 145 and three other numbers from Ans
+                // Get the container element
+
+
+                // created a box that contain name and options 
+                var QuestionBox = document.createElement('div');
+
+
+                function handleClick(event) {
+                    var correctAns = event.target.name;
+                    console.log(correctAns);
+
+                    var text = event.target.innerText;
+                    console.log(text);
+
+                    event.target.style.color = 'white';
+                    var option_bg = 'grey';
+                    if (correctAns == text) {
+                        console.log("Won");
+                        // option_bg = 'green';
+                        option_bg = '#219C90';
+                    }
+                    else {
+                        console.log("Loss");
+                        // option_bg = 'red';
+                        option_bg = '#EE4E4E';
+                    }
+                    event.target.style.backgroundColor = option_bg;
+                }
+
+
+
+                QuestionBox.innerHTML = `<div class="nameContiner">${name}
+                    </div>
+                    <div class="buttonContiner buttonContainer${1}" name=${value}>
+                        <button onclick="handleClick(event)" name = ${value}>${op[0]}</button>
+                        <button onclick="handleClick(event)" name = ${value}>${op[1]}</button>
+                        <button onclick="handleClick(event)" name = ${value}>${op[2]}</button>
+                        <button onclick="handleClick(event)" name = ${value}>${op[3]}</button>
+                    </div>`
+                QuestionBox.classList.add("question");
+
+
+
+                Quiz.appendChild(QuestionBox)
+
+                console.log(document.getElementById("quiz").innerHTML);
+
+                // var NameContiner = document.querySelector(".namecontiner")
+                // console.log(NameContiner);
+                // NameContiner.textContent = name;
+
+                // var container = document.getElementsByClassName(`buttonContainer${i}`);
+                // console.log(container.innerHTML);
+
+
+
+
+            }
+        }
+
+    </script>
+</body>
+
+</html>
